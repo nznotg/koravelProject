@@ -8,6 +8,8 @@
 from django.db import models
 
 
+
+
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
 
@@ -96,6 +98,24 @@ class Board(models.Model):
     class Meta:
         managed = False
         db_table = 'board'
+
+    def to_json(self):
+        return {
+            "boardtitle" : self.boardtitle,
+            "boardcat" : self.boardcat,
+            "boardtype" : self.boardtype,
+            "boardcontent1" : self.boardcontent1,
+            "boardcontent2" : self.boardcontent2,
+            "boardreco" : self.boardreco,
+            "boardviewcount" : self.boardviewcount,
+            "boardidx" : self.boardidx,
+            "boardwriter" : self.boardwriter,
+            "boarddate" : self.boarddate,
+            'b_fname' : self.b_fname,
+            'b_realfname' : self.b_realfname,
+            'b_fsize' : self.b_fsize,
+            "boardkeyword" : self.boardkeyword
+        }
 
 
 class DjangoAdminLog(models.Model):
@@ -226,6 +246,8 @@ class Region(models.Model):
     class Meta:
         managed = False
         db_table = 'region'
+
+
 
 
 class Regionreview(models.Model):

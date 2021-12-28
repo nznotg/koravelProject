@@ -20,5 +20,6 @@ from koraveladmin import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('koraveladmin.urls')),
+    # path('', views.chart, name='chart'),
 
 ]

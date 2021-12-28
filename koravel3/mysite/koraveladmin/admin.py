@@ -2,6 +2,9 @@
 from django.contrib import admin
 from .models import *
 import django.utils.html as format_html
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+from django.db.models import Count
 
 
 # admin.site.register(Post)
@@ -31,10 +34,13 @@ class RegionAdmin(admin.ModelAdmin):
 
     styled_status.short_description = '별점'
 
-    # 데이터 리스트의 제목 출력하는 함수
+    # change_list.html 로 데이터 전송 // 참조 사이트 : https://findwork.dev/blog/adding-charts-to-django-admin/
     def changelist_view(self, request, extra_context=None):
-        extra_context = {'title': '지역 데이터 목록'} # Region 테이블에 들어가면 제목을 바꿔줌
-        return super().changelist_view(request, extra_context)
+        regionaddr_all = Region.objects.values('regionsumaddr').annotate(region_count=Count('regionaddrcode'))
+        extra_context = {
+            'regionaddr_all': regionaddr_all
+        }
+        return super().changelist_view(request, extra_context=extra_context)
 
 admin.site.register(Region, RegionAdmin)
 

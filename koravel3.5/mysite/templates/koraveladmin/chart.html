@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% load static %}
+<!--    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+
+</head>
+<body>
+<h1>Chart js 노출</h1>
+    <div style="width: 900px; height: 900px;">
+        <canvas id="chart"></canvas>
+    </div>
+
+    <!-- board DATA 받아오기 -->
+    {% if usr_list %}
+        <ul>
+<!--        {% for review in review_count %}-->
+<!--            <li><a href="/{{ board.boarcat }}">{{ review.regionidx }}번 글 댓글 갯수 : {{ review.review_count }}</a></li>-->
+<!--&lt;!&ndash;            <li><a href="/{{ board.boarcate }}">{{ board.boardcate }} : {{ board.view_count }}</a></li>&ndash;&gt;-->
+<!--        {% endfor %}-->
+<!--        </ul>-->
+        <ul>
+        {% for usr in usr_list %}
+            <li><a href="/{{ board.boarcat }}">{{ usr.month }} : {{ usr.c }}</a></li>
+<!--            <li><a href="/{{ board.boarcate }}">{{ board.boardcate }} : {{ board.view_count }}</a></li>-->
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>지역 데이터가 없습니다.</p>
+    {% endif %}
+    <script>
+<!-- 참고 사이트 1 : https://ssungkang.tistory.com/entry/javascript-JSONparse-을-사용하여-python-데이터-사용하기  -->
+<!-- 참고 사이트 2 : https://velog.io/@neulhan/Javascript에서-django-ORM-객체-사용하기-feat.-kakao-지도-API -->
+        var context = document
+                .getElementById('chart')
+                .getContext('2d');
+
+        <!-- board_cat 의 데이터 담기 -->
+<!--        &lt;!&ndash; group by 데이터를 JSON 타입으려 변환 시도 1 : 실패 &ndash;&gt;-->
+<!--&lt;!&ndash;-->
+<!--        const board_string = "{{ board_cat }}".replace(/&#x27;/g, "\"");-->
+
+<!--        var board_string_slice = board_string.slice(13,-4);-->
+
+<!--        const boards = JSON.parse(board_string_slice);-->
+
+<!--&ndash;&gt;-->
+
+        <!-- group by로 추출한 board_cat 데이터를 for문으로 나누기 -->
+        let boardcategory = []; <!-- => chart.js label에 추가 -->
+        let boardviewcount = []; <!-- => chart.js data에 추가 -->
+        {% for boardc in board_cat %}
+           boardcategory.push("{{ boardc.boardcat }}")
+           boardviewcount.push({{ boardc.view_count }})
+        {% endfor %}
+
+        console.log(boardcategory);
+        console.log(boardviewcount);
+
+        <!-- group by로 추출한 regionaddr_all 데이터 for문으로 나누기 -->
+        let regionaddr = [];
+        let region_count = [];
+        {% for region in regionaddr_all %}
+            regionaddr.push("{{ region.regionsumaddr }}")
+            region_count.push({{ region.region_count }})
+        {% endfor %}
+
+        console.log(regionaddr)
+        console.log(region_count)
+
+        <!-- group by로 추출한 review_count 데이터 for문으로 나누기 -->
+        let reviewContent = [];
+        let reviewcnt = [];
+        {% for review in review_count %}
+            reviewContent.push("{{ review.regionidx }}번 글")
+            reviewcnt.push({{ review.review_count }})
+        {% endfor %}
+
+        console.log(reviewContent)
+        console.log(reviewcnt)
+
+
+
+        <!-- board json 타입 만들기 1 -->
+<!--        let board = JSON.parse("{{ board_js | escapejs }}") -->
+        <!-- board json 타입 만들기 2 -->
+<!--        let board2 = [-->
+<!--            {% for board in board_list %}-->
+<!--                {-->
+<!--                    boardcat : "{{ board.boardcat }}",-->
+<!--                    boardviewcount : "{{ board.boardviewcount }}",-->
+<!--                },-->
+<!--            {% endfor %}-->
+<!--        ]-->
+
+
+
+
+            var myChart = new Chart(context, {
+                type: 'line',
+                data: {
+                    labels: reviewContent,
+                    datasets: [
+                        {
+                            label: 'koravel3/mysite/templates/koraveladmin/chart.html',
+                            fill: false,
+                            data: reviewcnt,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        },
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+    </script>
+</body>
+</html>

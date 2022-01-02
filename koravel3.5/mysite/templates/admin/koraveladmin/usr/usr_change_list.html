@@ -1,0 +1,85 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+<h1> {{ title }}</h1>
+
+{% block extrahead %}
+{{ block.supper }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  var context = document
+        .getElementById('chart')
+        .getContext('2d');
+  var randomColorGenerator = function() {
+  return '#' + (Math.random().toString(16) + '000000').slice(2,8);
+  };
+        let usrbirth = [];
+        let usrcnt = [];
+        {% for usr in usr_list %}
+            usrbirth.push("{{ usr.month }}")
+            usrcnt.push({{ usr.c }})
+        {% endfor %}
+
+        console.log(usrbirth)
+        console.log(usrcnt)
+
+  var myChart = new Chart(context, {
+                type: 'bar',
+                data: {
+                    labels: usrbirth,
+                    datasets: [
+                        {
+                            label: '출생일별 회원 현황',
+                            fill: false,
+                            data: usrcnt,
+                            backgroundColor: [{% for usr in usr_list %}randomColorGenerator(),{% endfor %}],
+<!--                            [-->
+<!--                                'rgba(255, 99, 132, 0.2)',-->
+<!--                                'rgba(54, 162, 235, 0.2)',-->
+<!--                                'rgba(255, 206, 86, 0.2)',-->
+<!--                                'rgba(75, 192, 192, 0.2)',-->
+<!--                                'rgba(153, 102, 255, 0.2)',-->
+<!--                                'rgba(255, 159, 64, 0.2)'-->
+<!--                            ],-->
+                            borderColor: [{% for usr in usr_list %}randomColorGenerator(),{% endfor %}],
+<!--                            [-->
+<!--                                'rgba(255, 99, 132, 1)',-->
+<!--&lt;!&ndash;                                'rgba(54, 162, 235, 1)',&ndash;&gt;-->
+<!--&lt;!&ndash;                                'rgba(255, 206, 86, 1)',&ndash;&gt;-->
+<!--&lt;!&ndash;                                'rgba(75, 192, 192, 1)',&ndash;&gt;-->
+<!--&lt;!&ndash;                                'rgba(153, 102, 255, 1)',&ndash;&gt;-->
+<!--&lt;!&ndash;                                'rgba(255, 159, 64, 1)'&ndash;&gt;-->
+<!--                            ],-->
+                            borderWidth: 0
+                        },
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+          });
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- Render our chart -->
+<div style="width: 90%;">
+  <canvas style="margin-bottom: 30px; width: 80%; height: 70%;" id="chart"></canvas>
+</div>
+<!-- Render the rest of the ChangeList view -->
+{{ block.super }}
+{% endblock %}

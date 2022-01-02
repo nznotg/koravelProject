@@ -1,0 +1,202 @@
+{% extends "admin/base.html" %}
+
+{% block extrahead %}
+{{ block.supper }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+
+
+<!--  review -->
+  var context = document
+        .getElementById('review_chart')
+        .getContext('2d');
+
+        let reviewdata = [{'regionidx': 1, 'review_count': 3}, {'regionidx': 2, 'review_count': 2}, {'regionidx': 3, 'review_count': 2}, {'regionidx': 11, 'review_count': 2}, {'regionidx': 4, 'review_count': 2}, {'regionidx': 5, 'review_count': 2}, {'regionidx': 6, 'review_count': 2}, {'regionidx': 7, 'review_count': 2}, {'regionidx': 8, 'review_count': 2}, {'regionidx': 9, 'review_count': 2}, {'regionidx': 10, 'review_count': 2}];
+        let reviewidx = [];
+        let reviewcnt = [];
+        reviewdata.forEach(function(e, i){
+<!--          console.log(e);-->
+<!--          console.log(i);-->
+          reviewidx.push("지역번호 : "+e.regionidx);
+          reviewcnt.push(e.review_count);
+        })
+
+<!--        console.log("reviewidx :" + reviewidx);-->
+<!--        console.log("reviewcnt :" + reviewcnt);-->
+
+  var myChart = new Chart(context, {
+                type: 'line',
+                data: {
+                    labels: reviewidx,
+                    datasets: [
+                        {
+                            label: 'reviewdata',
+                            fill: false,
+                            data: reviewcnt,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+<!--                                'rgba(54, 162, 235, 1)',-->
+<!--                                'rgba(255, 206, 86, 1)',-->
+<!--                                'rgba(75, 192, 192, 1)',-->
+<!--                                'rgba(153, 102, 255, 1)',-->
+<!--                                'rgba(255, 159, 64, 1)'-->
+                            ],
+                            borderWidth: 3
+                        },
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+<!--  region -->
+   var context = document
+        .getElementById('region_chart')
+        .getContext('2d');
+
+        let regiondata = [{'region' : '서울', c: 286}, {'region' :'경기도', c: 83}, {'region' :'강원도', c: 42}, {'region' :'충청도', c: 42}, {'region' :'경상도', c: 83}, {'region' :'전라도', c: 45}]
+        let regionarea = []
+        let regioncnt = []
+        regiondata.forEach(function(e) {
+            regionarea.push(e.region)
+            regioncnt.push(e.c)
+        })
+
+        console.log(regionarea)
+        console.log(regioncnt)
+
+  var myChart = new Chart(context, {
+                type: 'pie',
+                data: {
+                    labels: regionarea,
+                    datasets: [
+                        {
+                            label: '지역별 데이터 현황',
+                            fill: false,
+                            data: regioncnt,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 3
+                        },
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+<!--  board -->
+   var context = document
+        .getElementById('board_chart')
+        .getContext('2d');
+
+        let board_cat = [{'boardcat': 'course', 'view_count': 95}, {'boardcat': 'region', 'view_count': 25}, {'boardcat': 'free', 'view_count': 95}]
+        let boartcat = []
+        let viewcnt = []
+        board_cat.forEach(function(e) {
+            boartcat.push(e.boardcat)
+            viewcnt.push(e.view_count)
+        })
+
+  var myChart = new Chart(context, {
+                type: 'pie',
+                data: {
+                    labels: boartcat,
+                    datasets: [
+                        {
+                            label: '출생일별 회원 현황',
+                            fill: false,
+                            data: viewcnt,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 3
+                        },
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- Render our chart -->
+<div style="width: 90%;">
+<!--  <canvas style="margin-bottom: 30px; width: 80%; height: 70%;" id="usr_chart"></canvas>-->
+  <canvas style="margin-bottom: 30px; width: 80%; height: 70%;" id="review_chart"></canvas>
+</div>
+<div style="width: 90%;">
+  <canvas style="margin-bottom: 30px; width: 80%; height: 70%;" id="region_chart"></canvas>
+</div>
+<div style="width: 90%;">
+  <canvas style="margin-bottom: 30px; width: 80%; height: 70%;" id="board_chart"></canvas>
+</div>
+{{ block.super }}
+{% endblock %}

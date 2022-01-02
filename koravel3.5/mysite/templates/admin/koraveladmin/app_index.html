@@ -1,0 +1,77 @@
+<!--{% extends "admin/index.html" %}-->
+<!--{% load i18n %}-->
+
+<!--{% block bodyclass %}{{ block.super }} app-{{ app_label }}{% endblock %}-->
+
+<!--{% if not is_popup %}-->
+<!--{% block breadcrumbs %}-->
+<!--<div class="breadcrumbs">-->
+<!--<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>-->
+<!--&rsaquo;-->
+<!--{% for app in app_list %}-->
+<!--{{ app.name }}-->
+<!--{% endfor %}-->
+<!--</div>-->
+<!--{% endblock %}-->
+<!--{% endif %}-->
+<!--{% block content %}-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>-->
+<!--<canvas id="chart"></canvas>-->
+<!--<script>-->
+<!--document.addEventListener('DOMContentLoaded', () => {-->
+<!--  var context = document-->
+<!--        .getElementById('chart')-->
+<!--        .getContext('2d');-->
+
+<!--  let regionaddr = [];-->
+<!--  let region_count = [];-->
+<!--  {% for region in regionaddr_all %}-->
+<!--      regionaddr.push("{{ region.regionsumaddr }}")-->
+<!--      region_count.push({{ region.region_count }})-->
+<!--  {% endfor %}-->
+
+<!--  var myChart = new Chart(context, {-->
+<!--                type: 'line',-->
+<!--                data: {-->
+<!--                    labels: regionaddr,-->
+<!--                    datasets: [-->
+<!--                        {-->
+<!--                            label: 'templates/koraveladmin/app_index.html',-->
+<!--                            fill: false,-->
+<!--                            data: region_count,-->
+<!--                            backgroundColor: [-->
+<!--                                'rgba(255, 99, 132, 0.2)',-->
+<!--                                'rgba(54, 162, 235, 0.2)',-->
+<!--                                'rgba(255, 206, 86, 0.2)',-->
+<!--                                'rgba(75, 192, 192, 0.2)',-->
+<!--                                'rgba(153, 102, 255, 0.2)',-->
+<!--                                'rgba(255, 159, 64, 0.2)'-->
+<!--                            ],-->
+<!--                            borderColor: [-->
+<!--                                'rgba(255, 99, 132, 1)',-->
+<!--&lt;!&ndash;                                'rgba(54, 162, 235, 1)',&ndash;&gt;-->
+<!--&lt;!&ndash;                                'rgba(255, 206, 86, 1)',&ndash;&gt;-->
+<!--&lt;!&ndash;                                'rgba(75, 192, 192, 1)',&ndash;&gt;-->
+<!--&lt;!&ndash;                                'rgba(153, 102, 255, 1)',&ndash;&gt;-->
+<!--&lt;!&ndash;                                'rgba(255, 159, 64, 1)'&ndash;&gt;-->
+<!--                            ],-->
+<!--                            borderWidth: 3-->
+<!--                        },-->
+<!--                    ]-->
+<!--                },-->
+<!--                options: {-->
+<!--                    scales: {-->
+<!--                        yAxes: [-->
+<!--                            {-->
+<!--                                ticks: {-->
+<!--                                    beginAtZero: true-->
+<!--                                }-->
+<!--                            }-->
+<!--                        ]-->
+<!--                    }-->
+<!--                }-->
+<!--            });-->
+<!--          });-->
+<!--</script>-->
+<!--{% endblock %}-->
+<!--{% block sidebar %}{% endblock %}-->

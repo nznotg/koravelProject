@@ -1,0 +1,93 @@
+@charset "UTF-8";
+.myBoard{
+	text-align: center;
+	table-layout: auto;
+	width: 100%;
+	table-layout: fixed;
+}
+
+.myBoard td {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.myPageForm{
+	width:1033px;
+	hight:800px;
+	text-align: center;
+}
+.koravelImg{
+	width: 200px;
+	height: 50px;
+}
+.category{
+	margin-top: 20px;
+	width:1033px;
+	hight:50%;
+	text-align: center;
+	display: flex;
+}
+
+.search{
+	list-style: none;
+}
+.info{
+	color: black;
+	font-size: 20px;
+	margin: auto;
+}
+.boardViewCount{
+	width: 50%;
+	flex: 1;
+}
+.regionReview{
+	width: 50%;
+	flex: 1;
+}
+.myRegionReview{
+	width:100%;
+	table-layout: fixed;
+	
+}
+
+.myRegionReview td{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.search-form{
+	margin-top: 20px;
+	width: 70px;
+	height: 40px;
+	text-align: center;
+	display: inline-block;
+}
+.search-box{
+	margin-top: 20px;
+	width: 200px;
+	height: 40px;
+	text-align: center;
+	display: inline-block;
+}
+.search-submit{
+	margin-top: 20px;
+	height: 40px;
+	width: 70px;
+	text-align: center;
+	display: inline-block;
+}
+.delete{
+	width: 90px;
+	height: 40px;
+	box-sizing: inherit;
+	background-color: transparent;
+	color: red;
+	text-align: center;
+	font-size: 20px;
+	border-color: transparent;
+}
+.myBoardTitle{
+	color: blue;
+}

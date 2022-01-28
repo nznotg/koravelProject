@@ -1,0 +1,9 @@
+INDEX VERSION 1.4+/Users/nz/DEV/koravelProject/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+3078427390.index
+2941690132.index
+243870243.index
+4151425140.index
+3547825453.index
+46834532.index
+2249796095.index
+143696625.index

@@ -1,0 +1,351 @@
+
+
+
+/* Header영역 시작 */
+
+header{
+	width:1280px;
+	margin:auto;
+	background:white;
+	height:96px;
+	display: fixed;
+	top: 0;
+    left: 0;
+    right: 0;
+    font-family: 'Jua', sans-serif;
+}
+
+#headerInner {
+	height:77px;
+	text-align:center;
+	line-height:77px;
+}
+
+#searchBarBox{
+	padding:2px;
+}
+
+header a {
+	color: #000;
+    text-decoration: none;
+}
+
+header .searchbar{
+	width:290px;
+	background: rgba(0,0,0,0.5);
+	border-radius: 5px;
+	margin-top:17px;
+	color:white;
+	text-align: center;
+	height: 45px;
+}
+
+header .search{
+	height:45px;
+	width: 80px;
+	background-color: transparent;
+	font-style: italic;
+	font-size: 15px;
+	line-height:37px;
+	display: inline-block;
+}
+header .home{
+	width:200px;
+	height:40px;
+	background: rgba(0,0,0,0.0);
+	border-radius: 5px;
+	margin-top:20px;
+}
+
+.searchbar > form > input{
+	border : none;
+    width : 300px;
+    height : 40px;
+    background : rgb(248, 247, 247);
+    padding-left : 10px;
+}
+.searchbar > form > span{
+	width : 40px;
+    height: 40px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    text-indent : 100%;
+    white-space: nowrap;
+    overflow : hidden;
+    background-size: contain;
+    color: black;
+}
+.nav{
+	display:flex;
+	justify-content: flex-end;
+	line-height:86px;
+	margin: auto;
+}
+
+.nav > li{
+	margin: auto;
+	text-align: center;
+	font-size: 20px;
+}
+
+.nav > #weather {
+    display: flex;
+}
+.nav > #weather > .icon > .icon_weather {
+    width:35px; 
+    height:35px;
+}
+
+.nav > #currency {
+   display: flex;
+}
+.nav > #currency > .curr_icon {
+    background-image:url(images/currency-exchange.svg);
+    background-repeat : no-repeat;
+    width: 35px; 
+    height:35px;
+}
+
+.login {
+  margin-top : 24px;
+  width: 78px;
+  font-size : 15px;
+  display: flex;
+  justify-content: flex-end;
+  line-height: 86px;
+}
+
+/* Header영역 끝 */
+
+/* footer영역 시작 */
+
+footer{
+    background: rgba(8, 8, 8, 0.8);
+}
+
+.footer_wrap {
+    /* text-align: center; */
+    margin-left: 2%;
+    color:white;
+    font-size: 80%;
+}
+
+.footer_ul > li , p{
+    display: inline;
+    color:white;
+    font-size: 110%;
+}
+
+.HFimg{
+	width :180px;
+    height : 40px;
+}
+
+/* footer영역 끝 */
+
+
+/* main 영역 시작 */
+
+main {
+	overflow:auto;
+	max-width:1280px;
+	min-width:1000px;
+	max-height:900px;
+	min-height:800px;
+	margin:auto;
+    
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.contentBox {
+	border-radius: 11px;
+}
+
+main textarea{
+	border: 2.5px solid black;
+}
+
+.numTD{
+	text-align:center;
+}
+#titleTD{
+	font-weight:bold;
+}
+
+main a:link{
+	color: black; text-decoration: none;
+}
+	
+main a:visited {
+	color: grey;
+}
+
+main a:hover {
+	color: blue; text-decoration: underline;
+}
+
+main mark {
+	text-align:center;
+	background-color: white;
+}
+
+main table {
+	background-color: white;
+	white-space: nowrap;
+	table-layout: fixed;
+	border: 0px solid black;
+}
+
+
+main th {
+	height: 30px;
+	border-bottom: 1px solid #444444;
+}
+
+.catTitleT{
+	height: 30px;
+	border-bottom: 0px;
+	background-color: #feffc6;
+}
+.catTitleF{
+	height: 30px;
+	border-bottom: 0px;
+	background-color: #86b59b;
+}
+.catTitleR{
+	height: 30px;
+	border-bottom: 0px;
+	background-color: #cbdff3;
+}
+.catTitleC{
+	height: 30px;
+	border-bottom: 0px;
+	background-color: #f7d9ea;
+}
+
+main td {
+	height: 30px;
+	border-bottom: 1px solid #444444;
+}
+
+main td a {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 160px;
+	height: 30px;
+	display: block;
+}
+
+main input {
+	border: 1px solid black;
+}
+
+.changePage{
+	border:none;
+	background-color: white;
+	font-weight:bold;
+}
+#navB{
+	background-color: #feffc6;
+	font-weight:bold;
+}
+#navF{
+	background-color: #86b59b;
+	font-weight:bold;
+}
+#navR{
+	background-color: #cbdff3;
+	font-weight:bold;
+}
+#navC{
+	background-color: #f7d9ea;
+	font-weight:bold;
+}
+.cateChangeB{
+	border:0px solid black;
+}
+
+
+.catbutton{
+	border:none;
+	background: none;
+	font-size:19px;
+	font-weight:bold;
+	text-align:left;
+}
+
+main select {
+	border: 1px solid black;
+	height: 28px;
+}
+
+#image_container > img {
+	max-width:350px;
+}
+
+#freeBoard {
+	height:500px;
+}
+
+#courseBoard {
+	height:500px;
+}
+
+#regionBoard {
+	height:500px;
+}
+
+#boardContent{
+	min-height:500px; 
+}
+
+.button {
+	width:95px;
+	height:28px;
+	color:#fff;
+	background: #8f00ff;
+	font-size: 16px;
+	border:none;
+	border-radius: 20px;
+	transition:0.3s;
+}
+
+main .button:focus {
+	outline:0;
+}
+main .button:hover{
+	background: rgba(59, 139, 175, 0.9);
+	cursor: pointer;
+	box-shadow: 0 2px 4px rgba(68, 137, 168, 0.6);
+}
+
+main #right{
+	text-align:right;
+}
+
+.itemBox {
+    border:solid 1px black;
+    min-width:350px;
+    min-height:70px;
+    padding:10px;
+    margin-bottom:10px;
+}
+.itemBoxHighlight {
+    border:solid 1px black;
+    min-width:350px;
+    min-height:70px;
+    padding:10px;
+    margin-bottom:10px;
+    background-color:yellow;
+}
+.deleteBox {
+    float:right;
+    display:none;
+    cursor:pointer;
+}
+
+/* main 영역 끝 */
+
+  /* end */
+

@@ -1,0 +1,6 @@
+package com.koravel.dao;
+
+public class KoravelDAOImpl implements KoravelDAO {
+	
+
+}

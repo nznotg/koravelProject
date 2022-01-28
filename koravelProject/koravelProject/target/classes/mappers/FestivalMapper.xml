@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.koravel.dao.FestivalDAO">	
+
+	<select id="getFestivalList" resultType="hashmap">
+		SELECT festivalIdx, festivalTitle, festivalAddr, festivalStart, festivalEnd
+		FROM festival;
+	</select>
+	
+	<select id="getFestival" parameterType="FestivalVO" resultType="FestivalVO">
+		SELECT *
+		  FROM festival
+		 WHERE festivalIdx=#{festivalIdx}
+	</select>
+	
+	<!-- 북마크를 위한 겟보드 -->
+	<select id="getFestivalForReco"  parameterType="int" resultType="FestivalVO">
+		SELECT *
+		FROM festival
+		WHERE festivalIdx=#{searchRecoIdx}
+	</select>	
+	
+	<!-- 북마크 존재 여부 확인 -->
+	<select id="checkReco" resultType="int" parameterType="FestivalVO">
+		SELECT checkRecoTF
+		FROM reco
+		WHERE festivalIdx=#{festivalIdx} AND readerID=#{readerID}
+	</select>
+	
+	<!-- 북마크 총 수 증가 -->
+	<update id="festivalRecoUp" parameterType="int">
+		UPDATE festival SET
+		festivalReco = festivalReco + 1
+		WHERE festivalIdx = #{searchRecoIdx}
+	</update>
+	
+	<!-- 북마크 총 수 감소 -->
+	<update id="festivalRecoDown" parameterType="int">
+		UPDATE festival SET
+		festivalReco = festivalReco - 1
+		WHERE festivalIdx = #{searchRecoIdx}
+	</update>
+	
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.koravel.dao.RegionReviewDAO">
+	
+	<select id="review" resultType="hashmap"> <!-- 에러시 추가해보기 : parameterType="com.koravel.domain.RegionReviewVO" -->
+		
+		SELECT regionIdx, reviewIdx, usrNick, reviewContent, reviewDate, reviewStar
+		FROM regionReview
+		WHERE regionIdx = #{regionIdx}
+	
+	</select> 
+	
+	<select id='update' parameterType="RegionReviewVO">
+		UPDATE regionReview SET reviewContent = #{reviewContent}
+		WHERE reviewIdx = #{reviewIdx}
+	</select>
+	
+	<insert id="insert" parameterType="RegionReviewVO">		
+		INSERT INTO regionReview(regionIdx, reviewContent, usrNick, reviewDate)
+		VALUES(#{regionIdx}, #{reviewContent}, #{usrNick}, now())		
+	</insert>	
+</mapper>

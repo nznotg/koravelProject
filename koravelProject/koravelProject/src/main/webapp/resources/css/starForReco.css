@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+/* Save Demo 2 */
+.star-dashes-2 {
+  opacity: 0;
+  -webkit-transform-origin: center;
+  -webkit-transform: scale(0.5);
+}
+
+.active .star-dashes-2 {
+  -webkit-animation: dashes-2 2s forwards;
+}
+
+.active .main-star-2 {
+  fill: yellow;
+  -webkit-transform: rotate(360deg);
+}
+
+@-webkit-keyframes dashes-2 {
+  50% {
+    opacity: 1;
+    stroke: #f9f706;
+    -webkit-transform: rotate(360deg);
+  }
+}

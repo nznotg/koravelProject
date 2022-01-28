@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RecoDAO">
+	
+	<!-- 북마크 체크 -->
+	<update id="bookmark_check" parameterType="HashMap">
+		UPDATE reco
+		SET checkRecoTF = checkRecoTF + 1 
+		WHERE readerID=#{readerID}
+		AND boardIdx=#{searchRecoIdx}
+	</update>
+	
+	<!-- 북마크 체크해제 -->
+	<update id="bookmark_check_cancel" parameterType="HashMap">
+		UPDATE reco
+		SET checkRecoTF = 0
+		WHERE readerID=#{readerID}
+		AND boardIdx=#{searchRecoIdx}
+	</update>
+	
+	<!-- 북마크 로우 생성 -->
+	<insert id="recoInsert" parameterType="HashMap">
+		INSERT INTO reco(boardIdx, readerID, checkRecoTF)
+		VALUES (#{searchRecoIdx}, #{readerID}, 0)
+	</insert>
+
+	<!-- 북마크 존재 여부 확인 -->
+	<select id="checkReco" resultType="int" parameterType="hashMap">
+		SELECT COUNT(recoIdx)
+		FROM reco
+		WHERE boardIdx=#{searchRecoIdx} AND readerID=#{readerID}
+	</select>
+	
+	<!-- 보드 추천수  확인 -->
+	<select id="findReco" resultType="RecoVO" parameterType="hashMap">
+		SELECT *
+		FROM reco
+		WHERE boardIdx=#{searchRecoIdx}
+		AND readerID=#{readerID}
+	</select>
+	
+	<!-- 맞춤추천 -->
+	<!-- 북마크 체크 -->
+	<update id="bookmark_check2" parameterType="HashMap">
+		UPDATE reco
+		SET checkRecoTF = checkRecoTF + 1 
+		WHERE readerID=#{readerID}
+		AND regionIdx=#{searchRecoIdx}
+	</update>
+	
+	<!-- 북마크 체크해제 -->
+	<update id="bookmark_check_cancel2" parameterType="HashMap">
+		UPDATE reco
+		SET checkRecoTF = 0
+		WHERE readerID=#{readerID}
+		AND regionIdx=#{searchRecoIdx}
+	</update>
+	
+	<!-- 북마크 로우 생성 -->
+	<insert id="recoInsert2" parameterType="HashMap">
+		INSERT INTO reco(regionIdx, readerID, checkRecoTF)
+		VALUES (#{searchRecoIdx}, #{readerID}, 0)
+	</insert>
+
+	<!-- 북마크 존재 여부 확인 -->
+	<select id="checkReco2" resultType="int" parameterType="hashMap">
+		SELECT COUNT(recoIdx)
+		FROM reco
+		WHERE regionIdx=#{searchRecoIdx} AND readerID=#{readerID}
+	</select>
+	
+	<!-- 보드 추천수  확인 -->
+	<select id="findReco2" resultType="RecoVO" parameterType="hashMap">
+		SELECT *
+		FROM reco
+		WHERE regionIdx=#{searchRecoIdx}
+		AND readerID=#{readerID}
+	</select>
+	
+	<!-- 지역행사 -->
+	<!-- 북마크 체크 -->
+	<update id="bookmark_check3" parameterType="HashMap">
+		UPDATE reco
+		SET checkRecoTF = checkRecoTF + 1 
+		WHERE readerID=#{readerID}
+		AND festivalIdx=#{searchRecoIdx}
+	</update>
+	
+	<!-- 북마크 체크해제 -->
+	<update id="bookmark_check_cancel3" parameterType="HashMap">
+		UPDATE reco
+		SET checkRecoTF = 0
+		WHERE readerID=#{readerID}
+		AND festivalIdx=#{searchRecoIdx}
+	</update>
+	
+	<!-- 북마크 로우 생성 -->
+	<insert id="recoInsert3" parameterType="HashMap">
+		INSERT INTO reco(festivalIdx, readerID, checkRecoTF)
+		VALUES (#{searchRecoIdx}, #{readerID}, 0)
+	</insert>
+
+	<!-- 북마크 존재 여부 확인 -->
+	<select id="checkReco3" resultType="int" parameterType="hashMap">
+		SELECT COUNT(recoIdx)
+		FROM reco
+		WHERE festivalIdx=#{searchRecoIdx} AND readerID=#{readerID}
+	</select>
+	
+	<!-- 보드 추천수  확인 -->
+	<select id="findReco3" resultType="RecoVO" parameterType="hashMap">
+		SELECT *
+		FROM reco
+		WHERE festivalIdx=#{searchRecoIdx}
+		AND readerID=#{readerID}
+	</select>
+</mapper>

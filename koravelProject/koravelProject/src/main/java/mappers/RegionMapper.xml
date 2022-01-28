@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.koravel.dao.RegionDAO">
+
+	<select id="getRegion" parameterType="RegionVO" resultType="RegionVO">		
+		SELECT *
+		  FROM region
+		 WHERE regionIdx=#{regionIdx}		
+	</select>
+	
+	<select id="getRegionList" resultType="hashmap">
+		<![CDATA[
+		SELECT regionIdx, regionName, regionStar, regionMainImgFile, regionSumAddr, regionPhone,
+			   (select count(reviewContent) from regionReview a where a.regionIdx = b.regionIdx LIMIT 1) as review
+  		  FROM region b
+         ORDER BY regionIdx
+         LIMIT 12;
+		]]>
+	</select>
+	
+	<select id="getKeywordList" resultType="hashmap">
+		SELECT count
+		  FROM keyword
+		 WHERE count!=''
+		 LIMIT 8;
+	</select>
+
+	<select id="getFestivalList" resultType="hashmap">
+		SELECT festivalIdx, festivalTitle, festivalAddr, festivalStart, festivalEnd
+		FROM festival;
+	</select>
+	
+	<select id="getDetailFestival" parameterType="RegionVO" resultType="RegionVO">
+		<![CDATA[
+		SELECT *
+		  FROM festival
+		 WHERE festivalIdx=#{festivalIdx}
+		]]>
+	</select>
+	
+	<!-- 북마크를 위한 겟보드 -->
+	<select id="getRegionForReco"  parameterType="int" resultType="RegionVO">
+		SELECT *
+		FROM region
+		WHERE regionIdx=#{searchRecoIdx}
+	</select>	
+	
+	<!-- 북마크 존재 여부 확인 -->
+	<select id="checkReco" resultType="int" parameterType="RegionVO">
+		SELECT checkRecoTF
+		FROM reco
+		WHERE regionIdx=#{regionIdx} AND readerID=#{readerID}
+	</select>
+	
+	<!-- 북마크 총 수 증가 -->
+	<update id="regionRecoUp" parameterType="int">
+		UPDATE region SET
+		regionReco = regionReco + 1
+		WHERE regionIdx = #{searchRecoIdx}
+	</update>
+	
+	<!-- 북마크 총 수 감소 -->
+	<update id="regionRecoDown" parameterType="int">
+		UPDATE region SET
+		regionReco = regionReco - 1
+		WHERE regionIdx = #{searchRecoIdx}
+	</update>
+	
+</mapper>

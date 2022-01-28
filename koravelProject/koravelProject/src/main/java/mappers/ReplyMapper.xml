@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.koravel.dao.ReplyDAO">
+
+	<insert id="insertReply" parameterType="ReplyVO">		
+		INSERT INTO reply(regionIdx, replyInfo, usrID, replyDate, replyStar)
+		VALUES(#{regionIdx}, #{replyInfo}, #{usrID}, now(), #{replyStar})		
+	</insert>		
+	
+	<select id='selectAllReply' resultType="ReplyVO">
+		SELECT * FROM reply
+	</select>
+	
+	<!-- 댓글 하나 가져오기 -->
+	<select id='updateReply' parameterType="ReplyVO">
+		UPDATE reply SET replyInfo = #{replyInfo}
+		WHERE replyIdx = #{replyIdx}
+	</select>
+	
+	<delete id='deleteReply' parameterType="ReplyVO">
+		DELETE FROM reply WHERE replyIdx=#{replyIdx}
+	</delete>
+	
+	<select id="replyAll" resultType="hashmap">
+		SELECT replyIdx, usrID, replyInfo, replyDate, replyStar, regionIdx
+		FROM reply
+		WHERE regionIdx = #{regionIdx}	
+	</select>
+	
+</mapper>

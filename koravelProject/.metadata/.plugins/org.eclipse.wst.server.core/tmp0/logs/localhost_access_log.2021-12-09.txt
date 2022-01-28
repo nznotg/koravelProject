@@ -1,0 +1,6 @@
+127.0.0.1 - - [09/Dec/2021:23:44:46 +0900] "GET / HTTP/1.1" 404 807
+0:0:0:0:0:0:0:1 - - [09/Dec/2021:23:44:47 +0900] "GET /koravelProject/index.jsp HTTP/1.1" 200 135
+0:0:0:0:0:0:0:1 - - [09/Dec/2021:23:44:48 +0900] "GET /favicon.ico HTTP/1.1" 404 818
+0:0:0:0:0:0:0:1 - - [09/Dec/2021:23:44:49 +0900] "GET /koravelProject/user/userJoin.do HTTP/1.1" 200 2490
+0:0:0:0:0:0:0:1 - - [09/Dec/2021:23:44:49 +0900] "GET /koravelProject/resources/js/js_userinput.js HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [09/Dec/2021:23:44:49 +0900] "GET /koravelProject/resources/js/jquery-1.7.1.js HTTP/1.1" 200 248235

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardDAO">
+
+	<insert id="insertBoard" parameterType="BoardVO">
+		INSERT INTO board(
+			boardTitle, boardType, boardCat, boardContent1, boardKeyword, boardWriter 
+			<if test="b_fname != null">
+				, b_fname, b_fsize, b_realfname
+			</if>
+			<if test="boardRegion != null">
+				, boardRegion
+			</if>
+			<if test="boardCourse != null">
+				, boardCourse
+			</if>
+		) VALUES (
+			#{boardTitle}, #{boardType}, #{boardCat}, #{boardContent1}, #{boardKeyword}, #{boardWriter}
+			<if test="b_fname != null">
+				, #{b_fname}, #{b_fsize}, #{b_realfname}
+			</if>
+			<if test="boardRegion != null">
+				, #{boardRegion}
+			</if>
+			<if test="boardCourse != null">
+				, #{boardCourse}
+			</if>
+		)
+	</insert>
+
+	<!-- listF-1 ~ listE 번째 까지의 데이터 추출 -->
+	<!-- where 조건문의 데이터 추출 -->
+
+	<select id="getBoardList" resultType="BoardVO" parameterType="BoardVO">
+	
+		SELECT * FROM board
+		<where>
+		<if test="boardCatP != 'total'">
+			boardCat = #{boardCatP}
+		</if>
+		</where>
+		ORDER BY boardIdx DESC LIMIT #{pageDB}, 17;
+		
+	</select>
+	
+	<select id="getBoardMain" resultType="BoardVO" parameterType="BoardVO">
+	
+		SELECT * FROM board
+		<where>
+		<if test="boardCatP != null">
+			boardCat = #{boardCatP}
+		</if>
+		</where>
+		ORDER BY boardIdx DESC LIMIT 7;
+		
+	</select>
+	
+	<update id="updateBoard"  parameterType="BoardVO">
+		<![CDATA[
+		UPDATE board SET
+		boardTitle = #{boardTitle},
+		boardContent1 = #{boardContent1},
+		boardKeyword = #{boardKeyword},
+		boardType = #{boardType}
+		WHERE boardIdx = #{boardIdx}
+		]]>
+	</update>
+	
+	<delete id="deleteBoard"  parameterType="BoardVO">
+		<![CDATA[
+		DELETE board
+		FROM board
+		WHERE boardIdx = #{boardIdx}
+		]]>
+	</delete>
+	
+	<select id="getBoard"  parameterType="BoardVO" resultType="BoardVO">
+		SELECT *
+		FROM board
+		WHERE boardIdx = #{boardIdx}
+	</select>
+	
+	<!-- 북마크를 위한 겟보드 -->
+	<select id="getBoardForReco"  parameterType="int" resultType="BoardVO">
+		SELECT *
+		FROM board
+		WHERE boardIdx=#{searchRecoIdx}
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="upViewCount" parameterType="BoardVO">
+		UPDATE board SET
+		boardViewCount = boardViewCount + 1
+		WHERE boardIdx = #{boardIdx}
+	</update>
+	
+	<!-- 북마크 존재 여부 확인 -->
+	<select id="checkReco" resultType="int" parameterType="BoardVO">
+		SELECT checkRecoTF
+		FROM reco
+		WHERE boardIdx=#{boardIdx} AND readerID=#{readerID}
+	</select>
+	
+	<!-- 북마크 총 수 증가 -->
+	<update id="boardRecoUp" parameterType="int">
+		UPDATE board SET
+		boardReco = boardReco + 1
+		WHERE boardIdx = #{searchRecoIdx}
+	</update>
+	
+	<!-- 북마크 총 수 감소 -->
+	<update id="boardRecoDown" parameterType="int">
+		UPDATE board SET
+		boardReco = boardReco - 1
+		WHERE boardIdx = #{searchRecoIdx}
+	</update>
+	
+</mapper>

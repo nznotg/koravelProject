@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.koravel.dao.UsrDAO">
+	
+<!-- 회원가입 -->
+	<insert id='usrInsert' parameterType="UsrVO">
+		INSERT INTO usr(usrID, usrPasswd, usrNick, usrBirth, usrEmail)
+		VALUES(#{usrID}, #{usrPasswd}, #{usrNick}, #{usrBirth}, #{usrEmail})
+ 	</insert>
+
+<!-- 로그인 확인 -->
+	<select id='usrLogin' resultType="UsrVO">
+		SELECT * FROM usr
+		<where>
+			usrID=#{usrID} AND usrPasswd=#{usrPasswd}
+		</where>
+	</select>
+
+	<!-- IDCheck -->
+	<select id='idCheck' parameterType="UsrVO" resultType="UsrVO">
+		SELECT * FROM usr  WHERE usrID = #{usrID} 
+	</select>
+	
+	<!-- EmailCheck -->
+	<select id='emailCheck' parameterType="UsrVO" resultType="UsrVO">
+		SELECT * FROM usr  WHERE usrEmail = #{usrEmail} 
+	</select>
+	
+<!-- 회원정보 조회 -->
+<select id="usrMyInfo" resultType="UsrVO" parameterType="usrVO">
+	<![CDATA[
+	SELECT usrID, usrNick, usrBirth, usrEmail
+	FROM usr
+	WHERE
+		usrID = #{usrID}
+	]]>
+</select>
+
+<!-- 회원정보 수정하기 -->
+<update id="usrUpdate" parameterType="String">
+	<![CDATA[
+		UPDATE usr SET
+		usrPasswd = #{usrPasswd},
+		usrNick = #{usrNick},
+		usrBirth = #{usrBirth}
+		WHERE usrID = #{usrID}
+	]]>
+</update>
+
+<!-- 마이게시판 -->
+	<!-- 마이게시판 게시글 총 개수 -->
+	<select id="count" resultType="int">
+		SELECT
+			COUNT(boardIdx)
+		FROM
+			board
+		WHERE boardWriter = #{usrID}
+	</select>
+	
+	<!-- 내가 작성한 게시판 리스트 불러오기 -->
+	<select id="myBoard" resultType="hashMap" parameterType="com.koravel.domain.BoardVO">
+			SELECT
+				boardIdx, boardType, boardWriter, boardTitle, boardCat,
+				boardContent1, boardDate, boardReco, boardViewCount
+			FROM board
+			WHERE boardWriter = #{usrID}
+	</select>
+	
+	<!-- 검색 개수 카운팅 -->
+	<select id="countBoard" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			board
+		WHERE
+		<choose>
+			<when test="searchType == 'title'" >
+				boardTitle LIKE CONCAT ('%', #{searchName}, '%')
+			</when>
+			<when test="searchType == 'Date'">
+				boardDate LIKE CONCAT ('%', #{searchName}, '%')
+			</when>
+			<when test="searchType == 'list'">
+				boardCat LIKE CONCAT ('%', #{searchName}, '%')
+			</when>
+			<when test="searchType == 'cate'">
+				boardType LIKE CONCAT ('%', #{searchName}, '%')
+			</when>
+			
+			<otherwise>
+				<if test="searchType == 'all'">
+					boardTitle LIKE CONCAT ('%', #{searchName}, '%')
+					OR boardDate LIKE CONCAT ('%', #{searchName}, '%')
+					OR boardType LIKE CONCAT ('%', #{searchName}, '%')
+					OR boardCat LIKE CONCAT ('%', #{searchName}, '%')
+				</if>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 검색 기능 구현 -->
+	<select id="getSearchList" resultType="com.koravel.domain.BoardVO">
+		<include refid="pagingHeader"></include>
+		SELECT
+			boardIdx, boardType, boardWriter, boardTitle, boardCat,
+			boardContent1, boardDate, boardReco, boardViewCount
+		FROM board
+		WHERE
+		<choose>
+			<when test="searchType == 'title'" >
+				boardTitle LIKE CONCAT('%', #{searchName}, '%')
+			</when>
+			<when test="searchType == 'Date'">
+				boardDate LIKE CONCAT('%', #{searchName}, '%')
+			</when>
+			<when test="searchType == 'list'">
+				boardCat LIKE CONCAT('%', #{searchName}, '%')
+			</when>
+			<when test="searchType == 'cate'">
+				boardType LIKE CONCAT('%', #{searchName}, '%')
+			</when>
+			
+			<otherwise>
+				<if test="searchType == 'all'">
+					boardTitle LIKE CONCAT('%', #{searchName}, '%')
+					OR boardDate LIKE CONCAT('%', #{searchName}, '%')
+					OR boardType LIKE CONCAT('%', #{searchName}, '%')
+					OR boardCat LIKE CONCAT('%', #{searchName}, '%')
+				</if>
+			</otherwise>
+		</choose>
+		<include refid="pagingFooter"></include>
+	</select>
+	
+	<!-- 내가 작성한 게시판 삭제 -->
+	<delete id="deleteMyBoard" parameterType="com.koravel.domain.BoardVO">
+		<![CDATA[
+			DELETE board
+			FROM board
+			WHERE boardIdx = #{boardIdx}
+		]]>
+	</delete>
+	
+	<!-- 내가 작성한 리뷰 조회 -->
+	<select id="myRegionReview" resultType="hashMap" parameterType="com.koravel.domain.UsrVO">
+		SELECT 
+			rep.regionIdx AS regionIdx,
+			rep.replyInfo AS replyInfo,
+			rep.replyDate AS replyDate,
+			r.regionName AS regionName,
+			r.regionStar AS regionStar
+		FROM
+			usr u INNER JOIN reply rep
+			ON u.usrID = rep.usrID 
+			INNER JOIN region r
+			ON rep.regionIdx = r.regionIdx
+			WHERE u.usrID = #{usrID}
+	</select>
+	
+	<!-- 내가 작성한 리뷰 제거 -->
+	<delete id="deleteMyReview" parameterType="com.koravel.domain.BoardVO">
+		<![CDATA[
+			DELETE reply
+			FROM reply
+			WHERE replyIdx = #{replyIdx}
+		]]>
+	</delete>
+<!-- 내가 찜한 게시판 리스트 호출 -->
+<select id="myRecoBoard" resultType="hashMap" parameterType="com.koravel.domain.UsrVO">
+	<![CDATA[
+	SELECT
+		r.readerID as readerID,
+		r.recoDate as recoDate, 
+		b.boardTitle as boardTitle, 
+		b.boardCat as boardCat,
+		b.boardReco as boardReco,
+		b.boardViewCount as boardViewCount,
+		b.boardIdx as boardIdx
+	FROM usr u INNER JOIN reco r
+	ON u.usrID = r.readerID 
+	INNER JOIN board b
+	ON r.boardIdx = b.boardIdx 
+	WHERE u.usrID = #{usrID}
+	]]>
+</select> 
+ 
+<!-- DIY 코스 -->
+	<!-- 내가 찜한 여행지 목록 호출 -->
+	<select id="myRecoRegion" resultType="hashMap" parameterType="com.koravel.domain.UsrVO">
+		SELECT 
+		r.readerID AS readerID,
+		r.recoDate AS recoDate,
+		r.recoIdx AS recoIdx,
+		r.regionIdx AS regionIdx,
+		reg.regionName  AS regionName,
+		reg.regionAddr AS regionAddr,
+		reg.regionPhone AS regionPhone,
+		reg.regionX AS regionX,
+		reg.regionY AS regionY
+	FROM 
+		usr u INNER JOIN reco r
+		ON u.usrID = r.readerID 
+		INNER JOIN region reg
+		ON r.regionIdx = reg.regionIdx 
+		WHERE u.usrID = #{usrID}
+	</select>
+	
+	<!-- 내가 찜한 여행지 리스트 제거 -->
+	<delete id="deleteMyBoardKoravel" parameterType="com.koravel.domain.RecoVO">
+		<![CDATA[
+			DELETE reco
+			FROM reco
+			WHERE recoIdx = #{recoIdx}
+		]]>
+	</delete>
+	
+	<sql id="pagingHeader">
+		
+		SELECT * FROM (
+			SELECT ROW_NUMBER() OVER(ORDER BY boardIdx ASC) AS rn, A.* FROM (
+	</sql>
+	
+	<sql id="pagingFooter">
+		) A
+	) B
+	WHERE rn BETWEEN #{pageStart} AND #{pageEnd} ORDER BY rn
+	</sql>
+	
+</mapper>
